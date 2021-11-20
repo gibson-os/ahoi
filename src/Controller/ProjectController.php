@@ -3,14 +3,21 @@ declare(strict_types=1);
 
 namespace GibsonOS\Module\Ahoi\Controller;
 
+use Exception;
 use GibsonOS\Core\Attribute\CheckPermission;
 use GibsonOS\Core\Controller\AbstractController;
+use GibsonOS\Core\Exception\CreateError;
+use GibsonOS\Core\Exception\GetError;
 use GibsonOS\Core\Exception\Model\DeleteError;
+use GibsonOS\Core\Exception\Model\SaveError;
 use GibsonOS\Core\Exception\Repository\SelectError;
+use GibsonOS\Core\Exception\SetError;
 use GibsonOS\Core\Model\User\Permission;
 use GibsonOS\Core\Service\Response\AjaxResponse;
+use GibsonOS\Module\Ahoi\Exception\ProjectException;
 use GibsonOS\Module\Ahoi\Model\Project;
 use GibsonOS\Module\Ahoi\Repository\ProjectRepository;
+use GibsonOS\Module\Ahoi\Service\ProjectService;
 use GibsonOS\Module\Ahoi\Store\ProjectItemStore;
 use GibsonOS\Module\Ahoi\Store\ProjectStore;
 
@@ -47,9 +54,18 @@ class ProjectController extends AbstractController
         return $this->returnSuccess();
     }
 
+    /**
+     * @throws SelectError
+     * @throws CreateError
+     * @throws GetError
+     * @throws SaveError
+     * @throws SetError
+     * @throws ProjectException
+     */
     #[CheckPermission(Permission::WRITE)]
     public function save(
         ProjectRepository $projectRepository,
+        ProjectService $projectService,
         string $name,
         string $localPath,
         int $transferSession = null,
@@ -63,6 +79,7 @@ class ProjectController extends AbstractController
             $project = $projectRepository->getById($id, $this->sessionService->getUserId());
         }
 
+        $projectRepository->startTransaction();
         $project
             ->setName($name)
             ->setDir($localPath)
@@ -70,7 +87,20 @@ class ProjectController extends AbstractController
             ->setRemotePath($remotePath)
             ->setUserId($onlyForThisUser ? $this->sessionService->getUserId() : null)
         ;
-        $project->save();
+
+        try {
+            $project->save();
+
+            if (empty($id)) {
+                $projectService->create($localPath);
+            }
+        } catch (SaveError|CreateError|GetError|SetError|ProjectException|Exception $e) {
+            $projectRepository->rollback();
+
+            throw $e;
+        }
+
+        $projectRepository->commit();
 
         return $this->returnSuccess($project);
     }

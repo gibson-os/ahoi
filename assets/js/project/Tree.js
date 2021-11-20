@@ -33,7 +33,7 @@ Ext.define('GibsonOS.module.ahoi.project.Tree', {
 
                     tree.getSelectionModel().select(tree.getRootNode().appendChild({
                         id: 0,
-                        text: '(Neues Projekt)',
+                        name: '(Neues Projekt)',
                         type: 'project',
                         leaf: true,
                         newItem: true
@@ -92,7 +92,7 @@ Ext.define('GibsonOS.module.ahoi.project.Tree', {
 
                 GibsonOS.MessageBox.show({
                     title: msg + ' wirklich löschen?',
-                    msg: msg + ' ' + record.get('text') + ' wirklich löschen?',
+                    msg: msg + ' ' + record.get('name') + ' wirklich löschen?',
                     type: GibsonOS.MessageBox.type.QUESTION,
                     buttons: [{
                         text: 'Ja',
