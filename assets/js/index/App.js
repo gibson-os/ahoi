@@ -48,12 +48,12 @@ Ext.define('GibsonOS.module.ahoi.index.App', {
                     });
                     item.loadRecord(record);
 
-                    var ftpSessionField = item.getForm().findField('ftpSession');
+                    var transferSessionField = item.getForm().findField('transferSession');
 
-                    if (record.get('ftpSessionId')) {
-                        ftpSessionField.setValueById(record.get('ftpSessionId'))
+                    if (record.get('transferSessionId')) {
+                        transferSessionField.setValueById(record.get('transferSessionId'))
                     } else {
-                        ftpSessionField.setValue(null);
+                        transferSessionField.setValue(null);
                     }
 
                     item.getForm().on('actioncomplete', function(form, action, options) {

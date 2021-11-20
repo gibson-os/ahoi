@@ -142,9 +142,9 @@ class Project extends AbstractModel implements JsonSerializable
         return [
             'id' => $this->getId(),
             'name' => $this->getName(),
-            'dir' => $this->getDir(),
-            'transferSessionId' => $this->getTransferSessionId(),
+            'localPath' => $this->getDir(),
             'remotePath' => $this->getRemotePath(),
+            'transferSessionId' => $this->getTransferSessionId(),
         ];
     }
 }

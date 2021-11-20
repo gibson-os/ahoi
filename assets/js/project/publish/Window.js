@@ -42,7 +42,7 @@ Ext.define('GibsonOS.module.ahoi.project.publish.Window', {
 
                             if (index < progressBar.gos.data.length) {
                                 progressBar.gos.generatePage(progressBar, index);
-                            } else if (window.gos.data.ftpSessionId) {
+                            } else if (window.gos.data.transferSessionId) {
                                 progressBar.updateProgress(1, 'Dateien werden zum Uploaden eingetragen...');
 
                                 GibsonOS.Ajax.request({
@@ -79,9 +79,9 @@ Ext.define('GibsonOS.module.ahoi.project.publish.Window', {
             }
         }];
 
-        if (this.gos.data.ftpSessionId) {
+        if (this.gos.data.transferSessionId) {
             this.items.push({
-                xtype: 'gosModuleFtpIndexTransferTabPanel'
+                xtype: 'gosModuleTransferIndexTransferTabPanel'
             });
             this.height = 300;
         }
@@ -98,12 +98,12 @@ Ext.define('GibsonOS.module.ahoi.project.publish.Window', {
 
         this.callParent();
 
-        if (this.gos.data.ftpSessionId) {
-            this.down('#ftpIndexTransferTabPanel').items.each(function (item) {
+        if (this.gos.data.transferSessionId) {
+            this.down('#transferIndexTransferTabPanel').items.each(function (item) {
                 var transferStore = item.getStore();
                 var transferProxy = transferStore.getProxy();
 
-                transferProxy.setExtraParam('id', window.gos.data.ftpSessionId);
+                transferProxy.setExtraParam('id', window.gos.data.transferSessionId);
             });
         }
 

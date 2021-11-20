@@ -48,9 +48,9 @@ Ext.define('GibsonOS.module.ahoi.project.Form', {
                 }
             }]
         },{
-            xtype: 'gosModuleFtpSessionAutoComplete',
-            fieldLabel: 'FTP Verbindung',
-            name: 'ftpSession',
+            xtype: 'gosModuleTransferSessionAutoComplete',
+            fieldLabel: 'Verbindung',
+            name: 'transferSession',
             listeners: {
                 change: function(combo, newValue, oldValue, options) {
                     var remotePath = form.down('#ahoiProjectFormRemotePath');
@@ -71,7 +71,7 @@ Ext.define('GibsonOS.module.ahoi.project.Form', {
             }
         },{
             xtype: 'fieldcontainer',
-            fieldLabel: 'FTP Verzeichnis',
+            fieldLabel: 'Entferntes Verzeichnis',
             itemId: 'ahoiProjectFormRemotePath',
             disabled: true,
             layout: 'hbox',
@@ -90,16 +90,16 @@ Ext.define('GibsonOS.module.ahoi.project.Form', {
                     var remotePathField = form.getForm().findField('remotePath');
                     var remotePath = remotePathField.getValue();
 
-                    var dialog = new GibsonOS.module.ftp.index.Dialog({
+                    var dialog = new GibsonOS.module.transfer.index.Dialog({
                         gos: {
                             data: {
                                 dir: remotePath ? remotePath : null,
-                                id: form.getForm().findField('ftpSession').getValue()
+                                id: form.getForm().findField('transferSession').getValue()
                             }
                         }
                     });
-                    dialog.down('#gosModuleFtpIndexDialogOkButton').handler = function() {
-                        var record = dialog.down('gosModuleFtpIndexTree').getSelectionModel().getSelection()[0];
+                    dialog.down('#gosModuleTransferIndexDialogOkButton').handler = function() {
+                        var record = dialog.down('gosModuleTransferIndexTree').getSelectionModel().getSelection()[0];
                         remotePathField.setValue(record.get('id'));
                         dialog.close();
                     }
@@ -153,7 +153,7 @@ Ext.define('GibsonOS.module.ahoi.project.Form', {
                     gos: {
                         data: {
                             id: form.getForm().findField('id').getValue(),
-                            ftpSessionId: form.getForm().findField('ftpSession').getValue()
+                            transferSessionId: form.getForm().findField('transferSession').getValue()
                         }
                     }
                 });

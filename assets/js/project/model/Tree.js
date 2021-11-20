@@ -22,7 +22,7 @@ Ext.define('GibsonOS.module.ahoi.project.model.Tree', {
         name: 'localPath',
         type: 'string'
     },{
-        name: 'ftpSessionId',
+        name: 'transferSessionId',
         type: 'int'
     },{
         name: 'remotePath',
