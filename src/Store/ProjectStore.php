@@ -36,6 +36,7 @@ class ProjectStore extends AbstractDatabaseStore
             $userId = $project->getUserId();
             $data['onlyForThisUser'] = $userId !== null && $userId === $this->userId;
             $data['type'] = 'project';
+            $data['projectId'] = $data['id'];
 
             yield $data;
         }

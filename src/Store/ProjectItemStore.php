@@ -13,14 +13,16 @@ class ProjectItemStore extends AbstractStore
     {
         return [[
             'id' => $this->projectId . '_pages',
-            'text' => 'Seiten',
+            'name' => 'Seiten',
             'type' => 'layout',
+            'data' => [],
         ], [
             'id' => $this->projectId . '_partials',
-            'text' => 'Partials',
+            'name' => 'Partials',
+            'data' => [],
         ], [
             'id' => $this->projectId . '_explorer',
-            'text' => 'Dateien',
+            'name' => 'Dateien',
             'type' => 'files',
             'leaf' => true,
         ]];

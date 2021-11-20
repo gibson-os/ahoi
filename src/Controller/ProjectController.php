@@ -5,9 +5,13 @@ namespace GibsonOS\Module\Ahoi\Controller;
 
 use GibsonOS\Core\Attribute\CheckPermission;
 use GibsonOS\Core\Controller\AbstractController;
+use GibsonOS\Core\Exception\Model\DeleteError;
 use GibsonOS\Core\Exception\Repository\SelectError;
 use GibsonOS\Core\Model\User\Permission;
 use GibsonOS\Core\Service\Response\AjaxResponse;
+use GibsonOS\Module\Ahoi\Model\Project;
+use GibsonOS\Module\Ahoi\Repository\ProjectRepository;
+use GibsonOS\Module\Ahoi\Store\ProjectItemStore;
 use GibsonOS\Module\Ahoi\Store\ProjectStore;
 
 class ProjectController extends AbstractController
@@ -16,23 +20,59 @@ class ProjectController extends AbstractController
      * @throws SelectError
      */
     #[CheckPermission(Permission::READ)]
-    public function index(ProjectStore $projectStore, int $node = null): AjaxResponse
+    public function index(ProjectStore $projectStore, ProjectItemStore $projectItemStore, int $node = null): AjaxResponse
     {
+        if (!empty($node)) {
+            $projectItemStore->setProjectId($node);
+
+            return $this->returnSuccess($projectItemStore->getList());
+        }
+
         $projectStore->setUserId($this->sessionService->getUserId());
 
         return $this->returnSuccess($projectStore->getList(), $projectStore->getCount());
     }
 
+    /**
+     * @throws SelectError
+     * @throws DeleteError
+     */
     #[CheckPermission(Permission::DELETE)]
-    public function delete(): AjaxResponse
+    public function delete(ProjectRepository $projectRepository, int $projectId): AjaxResponse
     {
+        $project = $projectRepository->getById($projectId, $this->sessionService->getUserId());
+        // @todo dateien löschen
+        $project->delete();
+
         return $this->returnSuccess();
     }
 
     #[CheckPermission(Permission::WRITE)]
-    public function save(): AjaxResponse
-    {
-        return $this->returnSuccess();
+    public function save(
+        ProjectRepository $projectRepository,
+        string $name,
+        string $localPath,
+        int $transferSession = null,
+        string $remotePath = null,
+        bool $onlyForThisUser = false,
+        int $id = null
+    ): AjaxResponse {
+        $project = new Project();
+
+        if (!empty($id)) {
+            $project = $projectRepository->getById($id, $this->sessionService->getUserId());
+        }
+
+        $project
+            ->setName($name)
+            ->setDir($localPath)
+            ->setTransferSessionId($transferSession)
+            ->setRemotePath($remotePath)
+            ->setUserId($onlyForThisUser ? $this->sessionService->getUserId() : null)
+        ;
+        $project->save();
+
+        return $this->returnSuccess($project);
     }
 
     #[CheckPermission(Permission::WRITE)]

@@ -2,6 +2,7 @@ Ext.define('GibsonOS.module.ahoi.project.Tree', {
     extend: 'GibsonOS.tree.Panel',
     alias: ['widget.gosModuleAhoiProjectTree'],
     itemId: 'ahoiProjectTree',
+    displayField: 'name',
     requiredPermission: {
         module: 'ahoi',
         task: 'project'
