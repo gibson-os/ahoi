@@ -5,15 +5,22 @@ namespace GibsonOS\Module\Ahoi\Controller;
 
 use GibsonOS\Core\Attribute\CheckPermission;
 use GibsonOS\Core\Controller\AbstractController;
+use GibsonOS\Core\Exception\Repository\SelectError;
 use GibsonOS\Core\Model\User\Permission;
 use GibsonOS\Core\Service\Response\AjaxResponse;
+use GibsonOS\Module\Ahoi\Store\ProjectStore;
 
 class ProjectController extends AbstractController
 {
+    /**
+     * @throws SelectError
+     */
     #[CheckPermission(Permission::READ)]
-    public function index(): AjaxResponse
+    public function index(ProjectStore $projectStore, int $node = null): AjaxResponse
     {
-        return $this->returnSuccess();
+        $projectStore->setUserId($this->sessionService->getUserId());
+
+        return $this->returnSuccess($projectStore->getList(), $projectStore->getCount());
     }
 
     #[CheckPermission(Permission::DELETE)]
