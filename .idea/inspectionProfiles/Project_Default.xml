@@ -8,6 +8,10 @@
             <option name="name" value="GibsonOS" />
             <option name="path" value="$PROJECT_DIR$/ruleset.xml" />
           </RulesetDescriptor>
+          <RulesetDescriptor>
+            <option name="name" value="GibsonOS" />
+            <option name="path" value="$PROJECT_DIR$/ruleset.xml" />
+          </RulesetDescriptor>
         </list>
       </option>
     </inspection_tool>

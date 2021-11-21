@@ -14,9 +14,11 @@ use GibsonOS\Core\Exception\Repository\SelectError;
 use GibsonOS\Core\Exception\SetError;
 use GibsonOS\Core\Model\User\Permission;
 use GibsonOS\Core\Service\Response\AjaxResponse;
+use GibsonOS\Module\Ahoi\Dto\Navigation;
 use GibsonOS\Module\Ahoi\Exception\ProjectException;
 use GibsonOS\Module\Ahoi\Model\Project;
 use GibsonOS\Module\Ahoi\Repository\ProjectRepository;
+use GibsonOS\Module\Ahoi\Service\LayoutService;
 use GibsonOS\Module\Ahoi\Service\ProjectService;
 use GibsonOS\Module\Ahoi\Store\ProjectItemStore;
 use GibsonOS\Module\Ahoi\Store\ProjectStore;
@@ -27,10 +29,14 @@ class ProjectController extends AbstractController
      * @throws SelectError
      */
     #[CheckPermission(Permission::READ)]
-    public function index(ProjectStore $projectStore, ProjectItemStore $projectItemStore, int $node = null): AjaxResponse
-    {
+    public function index(
+        ProjectRepository $projectRepository,
+        ProjectStore $projectStore,
+        ProjectItemStore $projectItemStore,
+        int $node = null
+    ): AjaxResponse {
         if (!empty($node)) {
-            $projectItemStore->setProjectId($node);
+            $projectItemStore->setProject($projectRepository->getById($node, $this->sessionService->getUserId()));
 
             return $this->returnSuccess($projectItemStore->getList());
         }
@@ -106,8 +112,31 @@ class ProjectController extends AbstractController
     }
 
     #[CheckPermission(Permission::WRITE)]
-    public function saveLayout(): AjaxResponse
-    {
+    public function saveLayout(
+        ProjectRepository $projectRepository,
+        LayoutService $layoutService,
+        int $projectId,
+        string $title,
+        string $url,
+        string $contentItemId,
+        array $navigations
+    ): AjaxResponse {
+        // @todo template??
+        $project = $projectRepository->getById($projectId);
+        $navigationDtos = [];
+
+        foreach ($navigations as $navigation) {
+            $navigationDtos[] = new Navigation($navigation['itemId'], $navigation['startDepth'], $navigation['depth']);
+        }
+
+        $layout = $layoutService->load($project)
+            ->setTitle($title)
+            ->setUrl($url)
+            ->setContentItemId($contentItemId)
+            ->setNavigations($navigationDtos)
+        ;
+        $layoutService->save($project, $layout);
+
         return $this->returnSuccess();
     }
 

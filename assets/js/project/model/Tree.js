@@ -43,7 +43,7 @@ Ext.define('GibsonOS.module.ahoi.project.model.Tree', {
         name: 'contentItemId',
         type: 'string'
     },{
-        name: 'navigation',
+        name: 'navigations',
         type: 'array'
     }, {
         name: 'onlyForThisUser',

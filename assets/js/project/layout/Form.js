@@ -48,17 +48,17 @@ Ext.define('GibsonOS.module.ahoi.project.layout.Form', {
                 permission: GibsonOS.Permission.WRITE
             },
             handler: function() {
-                var navigation = [];
+                var navigations = [];
 
                 form.down('#ahoiProjectNavigationGrid').getStore().each(function(record) {
-                    navigation.push(Ext.encode(record.getData()));
+                    navigations.push(record.getData());
                 });
 
                 form.getForm().submit({
                     xtype: 'gosFormActionAction',
                     url: baseDir + 'ahoi/project/saveLayout',
                     params: {
-                        'navigation[]': navigation
+                        'navigations': Ext.encode(navigations)
                     },
                     success: function(form, action) {
                         GibsonOS.MessageBox.show({

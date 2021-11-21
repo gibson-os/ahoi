@@ -74,7 +74,7 @@ Ext.define('GibsonOS.module.ahoi.index.App', {
                     });
 
                     item.loadRecord(record);
-                    item.down('#ahoiProjectNavigationGrid').getStore().loadData(record.get('navigation'));
+                    item.down('#ahoiProjectNavigationGrid').getStore().loadData(record.get('navigations'));
 
                     item.getForm().on('actioncomplete', function(form, action, options) {
                         item.items.each(function (field) {
@@ -85,7 +85,7 @@ Ext.define('GibsonOS.module.ahoi.index.App', {
                             record.set(field.getName(), field.getValue());
                         });
 
-                        record.set('navigation', item.down('#ahoiProjectNavigationGrid').getStore().getRange());
+                        record.set('navigations', item.down('#ahoiProjectNavigationGrid').getStore().getRange());
                         record.commit();
                     });
                     break;

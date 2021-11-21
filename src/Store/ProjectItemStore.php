@@ -4,24 +4,42 @@ declare(strict_types=1);
 namespace GibsonOS\Module\Ahoi\Store;
 
 use GibsonOS\Core\Store\AbstractStore;
+use GibsonOS\Module\Ahoi\Model\Project;
+use GibsonOS\Module\Ahoi\Service\LayoutService;
+use JsonException;
 
 class ProjectItemStore extends AbstractStore
 {
-    private int $projectId;
+    private Project $project;
 
+    public function __construct(private LayoutService $layoutService)
+    {
+    }
+
+    /**
+     * @throws JsonException
+     */
     public function getList(): iterable
     {
+        $id = $this->project->getId() ?? 0;
+        $layout = $this->layoutService->load($this->project);
+
         return [[
-            'id' => $this->projectId . '_pages',
+            'id' => $id . '_pages',
+            'projectId' => $id,
             'name' => 'Seiten',
             'type' => 'layout',
+            'title' => $layout->getTitle(),
+            'url' => $layout->getUrl(),
+            'contentItemId' => $layout->getContentItemId(),
+            'navigations' => $layout->getNavigations(),
             'data' => [],
         ], [
-            'id' => $this->projectId . '_partials',
+            'id' => $id . '_partials',
             'name' => 'Partials',
             'data' => [],
         ], [
-            'id' => $this->projectId . '_explorer',
+            'id' => $id . '_explorer',
             'name' => 'Dateien',
             'type' => 'files',
             'leaf' => true,
@@ -33,9 +51,9 @@ class ProjectItemStore extends AbstractStore
         return 0;
     }
 
-    public function setProjectId(int $projectId): ProjectItemStore
+    public function setProject(Project $project): ProjectItemStore
     {
-        $this->projectId = $projectId;
+        $this->project = $project;
 
         return $this;
     }
