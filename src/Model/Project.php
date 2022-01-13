@@ -28,7 +28,7 @@ class Project extends AbstractModel implements JsonSerializable
     #[Column(length: 255)]
     private ?string $remotePath = null;
 
-    #[Column]
+    #[Column(attributes: [Column::ATTRIBUTE_UNSIGNED])]
     private ?int $userId = null;
 
     private ?Session $transferSession = null;

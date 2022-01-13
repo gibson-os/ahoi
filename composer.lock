@@ -12,7 +12,7 @@
             "source": {
                 "type": "git",
                 "url": "git@wolli.dyndns.tv:/home/git/gibsonOs/Core.git",
-                "reference": "5cd0f01923b9b3b06bcab7821c28fc922b023210"
+                "reference": "9496ec343ed9fb05c7c2f2c2f7db4a9a7c727d7d"
             },
             "require": {
                 "ext-curl": "*",
@@ -81,7 +81,7 @@
                     "php ./vendor/codeception/codeception/codecept generate:test unit"
                 ]
             },
-            "time": "2022-01-13T12:21:25+00:00"
+            "time": "2022-01-13T21:10:23+00:00"
         },
         {
             "name": "gibson-os/explorer",
@@ -89,7 +89,7 @@
             "source": {
                 "type": "git",
                 "url": "git@wolli.dyndns.tv:/home/git/gibsonOs/Explorer.git",
-                "reference": "cb9734ddc6f2f8688fabefbb1843d45672df5335"
+                "reference": "e26fc9eb1a398a5d79b1a8131981d9032b86846d"
             },
             "require": {
                 "ext-exif": "*",
@@ -147,7 +147,7 @@
                     "php ./vendor/codeception/codeception/codecept generate:test unit"
                 ]
             },
-            "time": "2022-01-08T16:45:31+00:00"
+            "time": "2022-01-13T13:38:17+00:00"
         },
         {
             "name": "gibson-os/transfer",
@@ -155,7 +155,7 @@
             "source": {
                 "type": "git",
                 "url": "git@wolli.dyndns.tv:/home/git/gibsonOs/Transfer.git",
-                "reference": "d3884a76bff47533b6a8c1e366e569c359824cca"
+                "reference": "1e91f683b9d8c96ceb8aab9e710eb4c46e156425"
             },
             "require": {
                 "ext-iconv": "*",
@@ -215,7 +215,7 @@
                     "php ./vendor/codeception/codeception/codecept generate:test unit"
                 ]
             },
-            "time": "2022-01-08T16:54:46+00:00"
+            "time": "2022-01-13T20:01:10+00:00"
         },
         {
             "name": "mdo/mdo",
@@ -2381,9 +2381,6 @@
             },
             "require": {
                 "php": "^7.1 || ^8.0"
-            },
-            "replace": {
-                "myclabs/deep-copy": "self.version"
             },
             "require-dev": {
                 "doctrine/collections": "^1.0",
@@ -7155,5 +7152,5 @@
         "php": " ^8.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.2.0"
 }
