@@ -3,23 +3,32 @@ declare(strict_types=1);
 
 namespace GibsonOS\Module\Ahoi\Model;
 
+use GibsonOS\Core\Attribute\Install\Database\Column;
+use GibsonOS\Core\Attribute\Install\Database\Table;
 use GibsonOS\Core\Model\AbstractModel;
 use GibsonOS\Core\Model\User;
 use GibsonOS\Module\Transfer\Model\Session;
 use JsonSerializable;
 
+#[Table]
 class Project extends AbstractModel implements JsonSerializable
 {
+    #[Column(attributes: [Column::ATTRIBUTE_UNSIGNED], autoIncrement: true)]
     private ?int $id = null;
 
+    #[Column(length: 128)]
     private string $name;
 
+    #[Column(length: 255)]
     private string $dir;
 
+    #[Column(attributes: [Column::ATTRIBUTE_UNSIGNED])]
     private ?int $transferSessionId = null;
 
+    #[Column(length: 255)]
     private ?string $remotePath = null;
 
+    #[Column]
     private ?int $userId = null;
 
     private ?Session $transferSession = null;
