@@ -4,12 +4,17 @@ declare(strict_types=1);
 namespace GibsonOS\Module\Ahoi\Model;
 
 use GibsonOS\Core\Attribute\Install\Database\Column;
+use GibsonOS\Core\Attribute\Install\Database\Constraint;
 use GibsonOS\Core\Attribute\Install\Database\Table;
 use GibsonOS\Core\Model\AbstractModel;
 use GibsonOS\Core\Model\User;
 use GibsonOS\Module\Transfer\Model\Session;
 use JsonSerializable;
 
+/**
+ * @method ?Session getTransferSession()
+ * @method ?User    getUser()
+ */
 #[Table]
 class Project extends AbstractModel implements JsonSerializable
 {
@@ -31,14 +36,11 @@ class Project extends AbstractModel implements JsonSerializable
     #[Column(attributes: [Column::ATTRIBUTE_UNSIGNED])]
     private ?int $userId = null;
 
-    private ?Session $transferSession = null;
+    #[Constraint]
+    protected ?Session $transferSession = null;
 
-    private ?User $user = null;
-
-    public static function getTableName(): string
-    {
-        return 'ahoi_project';
-    }
+    #[Constraint]
+    protected ?User $user = null;
 
     public function getId(): ?int
     {
@@ -112,31 +114,11 @@ class Project extends AbstractModel implements JsonSerializable
         return $this;
     }
 
-    public function getTransferSession(): ?Session
-    {
-        if ($this->transferSessionId !== null) {
-            $this->transferSession = new Session();
-            $this->loadForeignRecord($this->transferSession, $this->transferSessionId);
-        }
-
-        return $this->transferSession;
-    }
-
     public function setTransferSession(?Session $transferSession): Project
     {
         $this->transferSession = $transferSession;
 
         return $this;
-    }
-
-    public function getUser(): ?User
-    {
-        if ($this->userId !== null) {
-            $this->user = new User();
-            $this->loadForeignRecord($this->user, $this->userId);
-        }
-
-        return $this->user;
     }
 
     public function setUser(?User $user): Project
