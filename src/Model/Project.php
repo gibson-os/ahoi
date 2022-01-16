@@ -12,8 +12,10 @@ use GibsonOS\Module\Transfer\Model\Session;
 use JsonSerializable;
 
 /**
- * @method ?Session getTransferSession()
- * @method ?User    getUser()
+ * @method Session|null getTransferSession()
+ * @method Project      setTransferSession(?Session $transferSession)
+ * @method User|null    getUser()
+ * @method Project      setUser(?User $user)
  */
 #[Table]
 class Project extends AbstractModel implements JsonSerializable
@@ -110,20 +112,6 @@ class Project extends AbstractModel implements JsonSerializable
     public function setUserId(?int $userId): Project
     {
         $this->userId = $userId;
-
-        return $this;
-    }
-
-    public function setTransferSession(?Session $transferSession): Project
-    {
-        $this->transferSession = $transferSession;
-
-        return $this;
-    }
-
-    public function setUser(?User $user): Project
-    {
-        $this->user = $user;
 
         return $this;
     }
