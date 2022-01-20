@@ -33,7 +33,7 @@ class AppData extends AbstractInstall implements PriorityInterface
 
     public function getModule(): ?string
     {
-        return 'explorer';
+        return 'ahoi';
     }
 
     public function getPriority(): int
