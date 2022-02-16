@@ -5,13 +5,17 @@ namespace GibsonOS\Module\Ahoi\Controller;
 
 use Exception;
 use GibsonOS\Core\Attribute\CheckPermission;
+use GibsonOS\Core\Attribute\GetModel;
 use GibsonOS\Core\Controller\AbstractController;
 use GibsonOS\Core\Exception\CreateError;
+use GibsonOS\Core\Exception\FactoryError;
 use GibsonOS\Core\Exception\GetError;
+use GibsonOS\Core\Exception\MapperException;
 use GibsonOS\Core\Exception\Model\DeleteError;
 use GibsonOS\Core\Exception\Model\SaveError;
 use GibsonOS\Core\Exception\Repository\SelectError;
 use GibsonOS\Core\Exception\SetError;
+use GibsonOS\Core\Mapper\ObjectMapper;
 use GibsonOS\Core\Model\User\Permission;
 use GibsonOS\Core\Service\Response\AjaxResponse;
 use GibsonOS\Module\Ahoi\Dto\Navigation;
@@ -22,11 +26,14 @@ use GibsonOS\Module\Ahoi\Service\LayoutService;
 use GibsonOS\Module\Ahoi\Service\ProjectService;
 use GibsonOS\Module\Ahoi\Store\ProjectItemStore;
 use GibsonOS\Module\Ahoi\Store\ProjectStore;
+use JsonException;
+use ReflectionException;
 
 class ProjectController extends AbstractController
 {
     /**
      * @throws SelectError
+     * @throws JsonException
      */
     #[CheckPermission(Permission::READ)]
     public function index(
@@ -61,7 +68,6 @@ class ProjectController extends AbstractController
     }
 
     /**
-     * @throws SelectError
      * @throws CreateError
      * @throws GetError
      * @throws SaveError
@@ -77,12 +83,10 @@ class ProjectController extends AbstractController
         int $transferSession = null,
         string $remotePath = null,
         bool $onlyForThisUser = false,
-        int $id = null
+        #[GetModel] Project $project = null
     ): AjaxResponse {
-        $project = new Project();
-
-        if (!empty($id)) {
-            $project = $projectRepository->getById($id, $this->sessionService->getUserId());
+        if ($project === null) {
+            $project = new Project();
         }
 
         $projectRepository->startTransaction();
@@ -97,7 +101,7 @@ class ProjectController extends AbstractController
         try {
             $project->save();
 
-            if (empty($id)) {
+            if ($project->getId() === null) {
                 $projectService->create($localPath);
             }
         } catch (SaveError|CreateError|GetError|SetError|ProjectException|Exception $e) {
@@ -111,22 +115,27 @@ class ProjectController extends AbstractController
         return $this->returnSuccess($project);
     }
 
+    /**
+     * @throws FactoryError
+     * @throws MapperException
+     * @throws JsonException
+     * @throws ReflectionException
+     */
     #[CheckPermission(Permission::WRITE)]
     public function saveLayout(
-        ProjectRepository $projectRepository,
         LayoutService $layoutService,
-        int $projectId,
+        ObjectMapper $objectMapper,
+        #[GetModel(['id' => 'projectId'])] Project $project,
         string $title,
         string $url,
         string $contentItemId,
         array $navigations
     ): AjaxResponse {
         // @todo template??
-        $project = $projectRepository->getById($projectId);
         $navigationDtos = [];
 
         foreach ($navigations as $navigation) {
-            $navigationDtos[] = new Navigation($navigation['itemId'], $navigation['startDepth'], $navigation['depth']);
+            $navigationDtos[] = $objectMapper->mapToObject(Navigation::class, $navigation);
         }
 
         $layout = $layoutService->load($project)
