@@ -5,6 +5,7 @@ namespace GibsonOS\Module\Ahoi\Controller;
 
 use Exception;
 use GibsonOS\Core\Attribute\CheckPermission;
+use GibsonOS\Core\Attribute\GetMappedModel;
 use GibsonOS\Core\Attribute\GetModel;
 use GibsonOS\Core\Controller\AbstractController;
 use GibsonOS\Core\Exception\CreateError;
@@ -15,6 +16,7 @@ use GibsonOS\Core\Exception\Model\DeleteError;
 use GibsonOS\Core\Exception\Model\SaveError;
 use GibsonOS\Core\Exception\Repository\SelectError;
 use GibsonOS\Core\Exception\SetError;
+use GibsonOS\Core\Manager\ModelManager;
 use GibsonOS\Core\Mapper\ObjectMapper;
 use GibsonOS\Core\Model\User\Permission;
 use GibsonOS\Core\Service\Response\AjaxResponse;
@@ -54,15 +56,14 @@ class ProjectController extends AbstractController
     }
 
     /**
-     * @throws SelectError
      * @throws DeleteError
+     * @throws JsonException
      */
     #[CheckPermission(Permission::DELETE)]
-    public function delete(ProjectRepository $projectRepository, int $projectId): AjaxResponse
+    public function delete(ModelManager $modelManager, #[GetModel] Project $project): AjaxResponse
     {
-        $project = $projectRepository->getById($projectId, $this->sessionService->getUserId());
         // @todo dateien löschen
-        $project->delete();
+        $modelManager->delete($project);
 
         return $this->returnSuccess();
     }
@@ -78,31 +79,18 @@ class ProjectController extends AbstractController
     public function save(
         ProjectRepository $projectRepository,
         ProjectService $projectService,
-        string $name,
-        string $localPath,
-        int $transferSession = null,
-        string $remotePath = null,
+        ModelManager $modelManager,
+        #[GetMappedModel(mapping: ['dir' => 'localPath', 'transferSessionId' => 'transferSession'])] Project $project,
         bool $onlyForThisUser = false,
-        #[GetModel] Project $project = null
     ): AjaxResponse {
-        if ($project === null) {
-            $project = new Project();
-        }
-
         $projectRepository->startTransaction();
-        $project
-            ->setName($name)
-            ->setDir($localPath)
-            ->setTransferSessionId($transferSession)
-            ->setRemotePath($remotePath)
-            ->setUserId($onlyForThisUser ? $this->sessionService->getUserId() : null)
-        ;
+        $project->setUserId($onlyForThisUser ? $this->sessionService->getUserId() : null);
 
         try {
-            $project->save();
+            $modelManager->save($project);
 
             if ($project->getId() === null) {
-                $projectService->create($localPath);
+                $projectService->create($project->getDir());
             }
         } catch (SaveError|CreateError|GetError|SetError|ProjectException|Exception $e) {
             $projectRepository->rollback();
