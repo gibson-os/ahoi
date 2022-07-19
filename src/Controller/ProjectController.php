@@ -20,7 +20,7 @@ use GibsonOS\Core\Manager\ModelManager;
 use GibsonOS\Core\Mapper\ObjectMapper;
 use GibsonOS\Core\Model\User\Permission;
 use GibsonOS\Core\Service\Response\AjaxResponse;
-use GibsonOS\Module\Ahoi\Dto\Navigation;
+use GibsonOS\Module\Ahoi\Dto\Layout\Navigation;
 use GibsonOS\Module\Ahoi\Exception\ProjectException;
 use GibsonOS\Module\Ahoi\Model\Project;
 use GibsonOS\Module\Ahoi\Repository\ProjectRepository;

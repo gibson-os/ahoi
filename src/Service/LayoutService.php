@@ -6,8 +6,7 @@ namespace GibsonOS\Module\Ahoi\Service;
 use GibsonOS\Core\Service\DirService;
 use GibsonOS\Core\Utility\JsonUtility;
 use GibsonOS\Module\Ahoi\Dto\Layout;
-use GibsonOS\Module\Ahoi\Dto\Navigation;
-use GibsonOS\Module\Ahoi\Dto\Partial;
+use GibsonOS\Module\Ahoi\Dto\Layout\Navigation;
 use GibsonOS\Module\Ahoi\Model\Project;
 use JsonException;
 
@@ -35,18 +34,12 @@ class LayoutService
             $navigations[] = new Navigation($navigation['itemId'], $navigation['startDepth'], $navigation['depth']);
         }
 
-        $partials = [];
-
-        foreach ($layout['partials'] as $partial) {
-            $partials[] = new Partial();
-        }
-
         return new Layout(
             $layout['title'],
             $layout['url'],
             $layout['content']['itemId'],
             $navigations,
-            $partials
+            $layout['partials']
         );
     }
 

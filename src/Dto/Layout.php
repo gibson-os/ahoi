@@ -3,13 +3,14 @@ declare(strict_types=1);
 
 namespace GibsonOS\Module\Ahoi\Dto;
 
+use GibsonOS\Module\Ahoi\Dto\Layout\Navigation;
 use JsonSerializable;
 
 class Layout implements JsonSerializable
 {
     /**
-     * @param Navigation[] $navigations
-     * @param Partial[]    $partials
+     * @param Navigation[]          $navigations
+     * @param array<string, string> $partials
      */
     public function __construct(
         private string $title,
@@ -75,7 +76,7 @@ class Layout implements JsonSerializable
     }
 
     /**
-     * @return Partial[]
+     * @return array<string, string>
      */
     public function getPartials(): array
     {
@@ -83,7 +84,7 @@ class Layout implements JsonSerializable
     }
 
     /**
-     * @param Partial[] $partials
+     * @param array<string, string> $partials
      */
     public function setPartials(array $partials): Layout
     {

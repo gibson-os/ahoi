@@ -7,31 +7,84 @@ use JsonSerializable;
 
 class Navigation implements JsonSerializable
 {
-    public function __construct(private string $itemId, private int $startDepth, private int $depth)
-    {
+    /**
+     * @param array<string, string> $name
+     * @param string[]              $keywords
+     * @param Navigation[]          $items
+     */
+    public function __construct(
+        private array $name,
+        private string $node,
+        private array $keywords,
+        private array $items,
+    ) {
     }
 
-    public function getItemId(): string
+    /**
+     * @return string[]
+     */
+    public function getName(): array
     {
-        return $this->itemId;
+        return $this->name;
     }
 
-    public function getStartDepth(): int
+    /**
+     * @param string[] $name
+     */
+    public function setName(array $name): void
     {
-        return $this->startDepth;
+        $this->name = $name;
     }
 
-    public function getDepth(): int
+    public function getNode(): string
     {
-        return $this->depth;
+        return $this->node;
+    }
+
+    public function setNode(string $node): void
+    {
+        $this->node = $node;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getKeywords(): array
+    {
+        return $this->keywords;
+    }
+
+    /**
+     * @param string[] $keywords
+     */
+    public function setKeywords(array $keywords): void
+    {
+        $this->keywords = $keywords;
+    }
+
+    /**
+     * @return Navigation[]
+     */
+    public function getItems(): array
+    {
+        return $this->items;
+    }
+
+    /**
+     * @param Navigation[] $items
+     */
+    public function setItems(array $items): void
+    {
+        $this->items = $items;
     }
 
     public function jsonSerialize(): array
     {
         return [
-            'itemId' => $this->getItemId(),
-            'startDepth' => $this->getStartDepth(),
-            'depth' => $this->getDepth(),
+            'name' => $this->getName(),
+            'node' => $this->getNode(),
+            'keywords' => $this->getKeywords(),
+            'items' => $this->getItems(),
         ];
     }
 }
