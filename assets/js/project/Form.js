@@ -1,21 +1,20 @@
 Ext.define('GibsonOS.module.ahoi.project.Form', {
-    extend: 'GibsonOS.form.Panel',
+    extend: 'GibsonOS.module.core.component.form.Panel',
     alias: ['widget.gosModuleAhoiProjectForm'],
-    itemId: 'ahoiProjectForm',
     flex: 0,
     requiredPermission: {
         module: 'ahoi',
         task: 'project'
     },
     initComponent: function() {
-        var form = this;
+        const me = this;
 
         this.items = [{
             xtype: 'gosFormHidden',
             name: 'id',
             listeners: {
                 change: function(field, newValue, oldValue) {
-                    var publishButton = form.down('#ahoiProjectFormPublishButton');
+                    var publishButton = me.down('#ahoiProjectFormPublishButton');
 
                     if (newValue > 0) {
                         publishButton.enable();
@@ -25,18 +24,18 @@ Ext.define('GibsonOS.module.ahoi.project.Form', {
                 }
             }
         },{
-            xtype: 'gosFormTextfield',
+            xtype: 'gosCoreComponentFormFieldTextField',
             fieldLabel: 'Name',
             name: 'name'
         },{
-            xtype: 'fieldcontainer',
+            xtype: 'gosCoreComponentFormFieldContainer',
             fieldLabel: 'Lokales Verzeichnis',
             layout: 'hbox',
             defaults: {
                 hideLabel: true
             },
             items: [{
-                xtype: 'gosFormTextfield',
+                xtype: 'gosCoreComponentFormFieldTextField',
                 name: 'localPath',
                 flex: 1,
                 margins: '0 5 0 0'
@@ -44,33 +43,33 @@ Ext.define('GibsonOS.module.ahoi.project.Form', {
                 xtype: 'gosButton',
                 text: '...',
                 handler: function() {
-                    GibsonOS.module.explorer.dir.fn.dialog(form.getForm().findField('localPath'));
+                    GibsonOS.module.explorer.dir.fn.dialog(me.getForm().findField('localPath'));
                 }
             }]
+        // },{
+        //     xtype: 'gosModuleTransferSessionAutoComplete',
+        //     fieldLabel: 'Verbindung',
+        //     name: 'transferSession',
+        //     listeners: {
+        //         change: function(combo, newValue, oldValue, options) {
+        //             var remotePath = me.down('#ahoiProjectFormRemotePath');
+        //             var remotePathField = me.getForm().findField('remotePath');
+        //             var record = combo.findRecordByValue(newValue);
+        //
+        //             if (record) {
+        //                 if (!remotePathField.getValue()) {
+        //                     remotePathField.setValue(record.get('remotePath'));
+        //                 }
+        //
+        //                 remotePath.enable();
+        //             } else {
+        //                 remotePath.disable();
+        //                 remotePathField.setValue(null);
+        //             }
+        //         }
+        //     }
         },{
-            xtype: 'gosModuleTransferSessionAutoComplete',
-            fieldLabel: 'Verbindung',
-            name: 'transferSession',
-            listeners: {
-                change: function(combo, newValue, oldValue, options) {
-                    var remotePath = form.down('#ahoiProjectFormRemotePath');
-                    var remotePathField = form.getForm().findField('remotePath');
-                    var record = combo.findRecordByValue(newValue);
-
-                    if (record) {
-                        if (!remotePathField.getValue()) {
-                            remotePathField.setValue(record.get('remotePath'));
-                        }
-
-                        remotePath.enable();
-                    } else {
-                        remotePath.disable();
-                        remotePathField.setValue(null);
-                    }
-                }
-            }
-        },{
-            xtype: 'fieldcontainer',
+            xtype: 'gosCoreComponentFormFieldContainer',
             fieldLabel: 'Entferntes Verzeichnis',
             itemId: 'ahoiProjectFormRemotePath',
             disabled: true,
@@ -79,7 +78,7 @@ Ext.define('GibsonOS.module.ahoi.project.Form', {
                 hideLabel: true
             },
             items: [{
-                xtype: 'gosFormTextfield',
+                xtype: 'gosCoreComponentFormFieldTextField',
                 name: 'remotePath',
                 flex: 1,
                 margins: '0 5 0 0'
@@ -87,14 +86,14 @@ Ext.define('GibsonOS.module.ahoi.project.Form', {
                 xtype: 'gosButton',
                 text: '...',
                 handler: function() {
-                    var remotePathField = form.getForm().findField('remotePath');
+                    var remotePathField = me.getForm().findField('remotePath');
                     var remotePath = remotePathField.getValue();
 
                     var dialog = new GibsonOS.module.transfer.index.Dialog({
                         gos: {
                             data: {
                                 dir: remotePath ? remotePath : null,
-                                id: form.getForm().findField('transferSession').getValue()
+                                id: me.getForm().findField('transferSession').getValue()
                             }
                         }
                     });
@@ -106,14 +105,14 @@ Ext.define('GibsonOS.module.ahoi.project.Form', {
                 }
             }]
         },{
-            xtype: 'gosFormCheckbox',
+            xtype: 'gosCoreComponentFormFieldCheckbox',
             name: 'onlyForThisUser',
             inputValue: true,
             fieldLabel: 'Zugriff',
             boxLabel: 'Nur für den aktuellen Benutzer'
         }];
 
-        this.buttons = [{
+        me.buttons = [{
             text: 'Speichern',
             itemId: 'ahoiProjectFormSaveButton',
             requiredPermission: {
@@ -121,11 +120,11 @@ Ext.define('GibsonOS.module.ahoi.project.Form', {
                 permission: GibsonOS.Permission.WRITE
             },
             handler: function() {
-                form.getForm().submit({
+                me.getForm().submit({
                     xtype: 'gosFormActionAction',
                     url: baseDir + 'ahoi/project/save',
                     success: function(form, action) {
-                        form.findField('id').setValue(Ext.decode(action.response.responseText).data.id);
+                        me.findField('id').setValue(Ext.decode(action.response.responseText).data.id);
 
                         GibsonOS.MessageBox.show({
                             title: 'Gespeichert!',
@@ -152,12 +151,12 @@ Ext.define('GibsonOS.module.ahoi.project.Form', {
                 new GibsonOS.module.ahoi.project.publish.Window({
                     gos: {
                         data: {
-                            id: form.getForm().findField('id').getValue(),
-                            transferSessionId: form.getForm().findField('transferSession').getValue()
+                            id: me.getForm().findField('id').getValue(),
+                            transferSessionId: me.getForm().findField('transferSession').getValue()
                         }
                     }
                 });
-                /*form.getForm().submit({
+                /*me.getForm().submit({
                  xtype: 'gosFormActionAction',
                  url: baseDir + 'ahoi/project/publish',
                  success: function(form, action) {

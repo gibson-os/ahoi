@@ -33,13 +33,13 @@ Ext.define('GibsonOS.module.ahoi.index.App', {
 
         this.callParent();
 
-        this.down('#ahoiProjectTree').on('selectionchange', function(tree, records) {
+        this.down('gosModuleAhoiProjectTree').on('selectionchange', function(tree, records) {
             if (!records.length) {
                 return false;
             }
 
-            var item = null;
-            var record = records[0];
+            let item = null;
+            const record = records[0];
 
             switch (record.get('type')) {
                 case 'project':
@@ -48,16 +48,16 @@ Ext.define('GibsonOS.module.ahoi.index.App', {
                     });
                     item.loadRecord(record);
 
-                    var transferSessionField = item.getForm().findField('transferSession');
-
-                    if (record.get('transferSessionId')) {
-                        transferSessionField.setValueById(record.get('transferSessionId'))
-                    } else {
-                        transferSessionField.setValue(null);
-                    }
+                    // const transferSessionField = item.getForm().findField('transferSession');
+                    //
+                    // if (record.get('transferSessionId')) {
+                    //     transferSessionField.setValueById(record.get('transferSessionId'))
+                    // } else {
+                    //     transferSessionField.setValue(null);
+                    // }
 
                     item.getForm().on('actioncomplete', function(form, action, options) {
-                        var data = Ext.decode(action.response.responseText).data;
+                        const data = Ext.decode(action.response.responseText).data;
 
                         Ext.iterate(data, function(field, value) {
                             record.set(field, value);
@@ -78,7 +78,7 @@ Ext.define('GibsonOS.module.ahoi.index.App', {
 
                     item.getForm().on('actioncomplete', function(form, action, options) {
                         item.items.each(function (field) {
-                            if (field.getItemId() == 'ahoiProjectNavigationGrid') {
+                            if (field.getItemId() === 'ahoiProjectNavigationGrid') {
                                 return true;
                             }
 
@@ -109,7 +109,7 @@ Ext.define('GibsonOS.module.ahoi.index.App', {
                     });
 
                     item.getForm().on('actioncomplete', function(form, action, options) {
-                        if (action.url != baseDir + 'ahoi/page/save') {
+                        if (action.url !== baseDir + 'ahoi/page/save') {
                             return false;
                         }
 

@@ -1,7 +1,6 @@
 Ext.define('GibsonOS.module.ahoi.project.Tree', {
     extend: 'GibsonOS.tree.Panel',
     alias: ['widget.gosModuleAhoiProjectTree'],
-    itemId: 'ahoiProjectTree',
     displayField: 'name',
     requiredPermission: {
         module: 'ahoi',
@@ -102,7 +101,7 @@ Ext.define('GibsonOS.module.ahoi.project.Tree', {
                                 var parent = record.parentNode;
 
                                 if (
-                                    parent.get('type') == 'page' &&
+                                    parent.get('type') === 'page' &&
                                     parent.childNodes.length == 1
                                 ) {
                                     parent.set('leaf', true);
@@ -147,8 +146,8 @@ Ext.define('GibsonOS.module.ahoi.project.Tree', {
             var node = nodes[0];
 
             if (
-                node.get('type') == 'layout' ||
-                node.get('type') == 'page'
+                node.get('type') === 'layout' ||
+                node.get('type') === 'page'
             ) {
                 addButton.enable();
             } else {
@@ -156,9 +155,9 @@ Ext.define('GibsonOS.module.ahoi.project.Tree', {
             }
 
             if (
-                node.get('type') == 'project' ||
-                node.get('type') == 'partial' ||
-                node.get('type') == 'page'
+                node.get('type') === 'project' ||
+                node.get('type') === 'partial' ||
+                node.get('type') === 'page'
             ) {
                 deleteButton.enable();
             } else {

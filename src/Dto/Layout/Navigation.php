@@ -7,8 +7,11 @@ use JsonSerializable;
 
 class Navigation implements JsonSerializable
 {
-    public function __construct(private string $itemId, private int $startDepth, private int $depth)
-    {
+    public function __construct(
+        private readonly string $itemId,
+        private readonly int $startDepth = 0,
+        private readonly ?int $depth = null
+    ) {
     }
 
     public function getItemId(): string
@@ -21,7 +24,7 @@ class Navigation implements JsonSerializable
         return $this->startDepth;
     }
 
-    public function getDepth(): int
+    public function getDepth(): ?int
     {
         return $this->depth;
     }

@@ -23,7 +23,6 @@ class LayoutService
     {
         $layout = JsonUtility::decode(file_get_contents(
             $this->dirService->addEndSlash($project->getDir()) .
-            'content' . DIRECTORY_SEPARATOR .
             'json' . DIRECTORY_SEPARATOR .
             'layout.json'
         ));
@@ -31,7 +30,11 @@ class LayoutService
         $navigations = [];
 
         foreach ($layout['navigations'] as $navigation) {
-            $navigations[] = new Navigation($navigation['itemId'], $navigation['startDepth'], $navigation['depth']);
+            $navigations[] = new Navigation(
+                $navigation['itemId'],
+                $navigation['startDepth'] ?? 0,
+                $navigation['depth'] ?? null
+            );
         }
 
         return new Layout(

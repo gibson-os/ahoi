@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace GibsonOS\Module\Ahoi\Store;
 
+use GibsonOS\Core\Service\DirService;
+use GibsonOS\Core\Service\FileService;
 use GibsonOS\Core\Store\AbstractStore;
 use GibsonOS\Module\Ahoi\Model\Project;
 use GibsonOS\Module\Ahoi\Service\LayoutService;
@@ -12,8 +14,11 @@ class ProjectItemStore extends AbstractStore
 {
     private Project $project;
 
-    public function __construct(private LayoutService $layoutService)
-    {
+    public function __construct(
+        private readonly LayoutService $layoutService,
+        private readonly DirService $dirService,
+        private readonly FileService $fileService,
+    ) {
     }
 
     /**
@@ -33,7 +38,11 @@ class ProjectItemStore extends AbstractStore
             'url' => $layout->getUrl(),
             'contentItemId' => $layout->getContentItemId(),
             'navigations' => $layout->getNavigations(),
-            'data' => [],
+            'data' => $this->getPages(
+                $this->dirService->addEndSlash($this->project->getDir()) .
+                'json' . DIRECTORY_SEPARATOR .
+                'content' . DIRECTORY_SEPARATOR
+            ),
         ], [
             'id' => $id . '_partials',
             'name' => 'Partials',
@@ -56,5 +65,27 @@ class ProjectItemStore extends AbstractStore
         $this->project = $project;
 
         return $this;
+    }
+
+    private function getPages(string $dir): array
+    {
+        $pages = [];
+
+        foreach ($this->dirService->getFiles($dir) as $item) {
+            $page = [
+                'name' => $this->fileService->getFilename($item),
+                'type' => 'page',
+            ];
+
+            if (is_dir($item)) {
+                $page['data'] = $this->getPages($item);
+            } else {
+                $page['leaf'] = true;
+            }
+
+            $pages[] = $page;
+        }
+
+        return $pages;
     }
 }
