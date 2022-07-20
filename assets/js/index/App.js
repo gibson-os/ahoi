@@ -90,6 +90,10 @@ Ext.define('GibsonOS.module.ahoi.index.App', {
                     });
                     break;
                 case 'partial':
+                    item = new GibsonOS.module.ahoi.partial.Form({
+                        region: 'center'
+                    });
+
                     break;
                 case 'image':
                     break;

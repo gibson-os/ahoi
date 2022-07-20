@@ -4,18 +4,18 @@ declare(strict_types=1);
 namespace GibsonOS\Module\Ahoi\Controller;
 
 use GibsonOS\Core\Attribute\CheckPermission;
-use GibsonOS\Core\Attribute\GetModel;
 use GibsonOS\Core\Controller\AbstractController;
 use GibsonOS\Core\Model\User\Permission;
 use GibsonOS\Core\Service\Response\AjaxResponse;
-use GibsonOS\Module\Ahoi\Model\Project;
+use GibsonOS\Core\Utility\JsonUtility;
 
 class PageController extends AbstractController
 {
     #[CheckPermission(Permission::READ)]
-    public function load(#[GetModel] Project $project): AjaxResponse
-    {
-        return $this->returnSuccess();
+    public function load(
+        string $localPath,
+    ): AjaxResponse {
+        return $this->returnSuccess(JsonUtility::decode(file_get_contents($localPath)));
     }
 
     #[CheckPermission(Permission::WRITE)]

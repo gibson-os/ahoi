@@ -6,6 +6,7 @@ namespace GibsonOS\Module\Ahoi\Store;
 use GibsonOS\Core\Service\DirService;
 use GibsonOS\Core\Service\FileService;
 use GibsonOS\Core\Store\AbstractStore;
+use GibsonOS\Module\Ahoi\Dto\Layout;
 use GibsonOS\Module\Ahoi\Model\Project;
 use GibsonOS\Module\Ahoi\Service\LayoutService;
 use JsonException;
@@ -46,7 +47,7 @@ class ProjectItemStore extends AbstractStore
         ], [
             'id' => $id . '_partials',
             'name' => 'Partials',
-            'data' => [],
+            'data' => $this->getPartials($layout),
         ], [
             'id' => $id . '_explorer',
             'name' => 'Dateien',
@@ -75,6 +76,8 @@ class ProjectItemStore extends AbstractStore
             $page = [
                 'name' => $this->fileService->getFilename($item),
                 'type' => 'page',
+                'projectId' => $this->project->getId(),
+                'localPath' => $item,
             ];
 
             if (is_dir($item)) {
@@ -87,5 +90,22 @@ class ProjectItemStore extends AbstractStore
         }
 
         return $pages;
+    }
+
+    private function getPartials(Layout $layout): array
+    {
+        $partials = [];
+
+        foreach ($layout->getPartials() as $name => $partial) {
+            $partials[] = [
+                'name' => $name,
+                'type' => 'partial',
+                'projectId' => $this->project->getId(),
+                'leaf' => true,
+                'partial' => $partial,
+            ];
+        }
+
+        return $partials;
     }
 }

@@ -1,7 +1,6 @@
 Ext.define('GibsonOS.module.ahoi.page.Form', {
-    extend: 'GibsonOS.form.Panel',
+    extend: 'GibsonOS.module.core.component.form.Panel',
     alias: ['widget.gosModuleAhoiPageForm'],
-    itemId: 'ahoiPageForm',
     flex: 0,
     layout: {
         type: 'vbox',
@@ -9,7 +8,7 @@ Ext.define('GibsonOS.module.ahoi.page.Form', {
     },
     requiredPermission: {
         module: 'ahoi',
-        task: 'project'
+        task: 'page'
     },
     initComponent: function() {
         var form = this;
@@ -24,33 +23,33 @@ Ext.define('GibsonOS.module.ahoi.page.Form', {
             xtype: 'gosFormHidden',
             name: 'projectId'
         },{
-            xtype: 'gosFormTextfield',
+            xtype: 'gosCoreComponentFormFieldTextField',
             fieldLabel: 'Dateiname',
             name: 'filename'
         },{
-            xtype: 'gosFormTextfield',
+            xtype: 'gosCoreComponentFormFieldTextField',
             fieldLabel: 'Titel',
             name: 'title'
         },{
-            xtype: 'gosFormTextfield',
+            xtype: 'gosCoreComponentFormFieldTextField',
             fieldLabel: 'Navigationspunkt',
             name: 'navigationText'
         },{
-            xtype: 'gosFormTextfield',
+            xtype: 'gosCoreComponentFormFieldTextField',
             fieldLabel: 'Keywords',
             name: 'keywords'
         },{
-            xtype: 'gosFormTextfield',
+            xtype: 'gosCoreComponentFormFieldTextField',
             fieldLabel: 'Vererbte Keywords',
             name: 'inheritedKeywords',
             submitVaue: false,
             disabled: true
         },{
-            xtype: 'gosFormTextfield',
+            xtype: 'gosCoreComponentFormFieldTextField',
             fieldLabel: 'Zu vererbende Keywords',
             name: 'inheritingKeywords'
         },{
-            xtype: 'gosFormTextArea',
+            xtype: 'gosCoreComponentFormFieldTextArea',
             fieldLabel: 'Beschreibung',
             name: 'description'
         },{
