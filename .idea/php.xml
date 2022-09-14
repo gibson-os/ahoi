@@ -32,7 +32,6 @@
       <path value="$PROJECT_DIR$/vendor/sebastianfeldmann/camino" />
       <path value="$PROJECT_DIR$/vendor/sebastianfeldmann/cli" />
       <path value="$PROJECT_DIR$/vendor/felixfbecker/language-server-protocol" />
-      <path value="$PROJECT_DIR$/vendor/php-cs-fixer/diff" />
       <path value="$PROJECT_DIR$/vendor/codeception/phpunit-wrapper" />
       <path value="$PROJECT_DIR$/vendor/netresearch/jsonmapper" />
       <path value="$PROJECT_DIR$/vendor/felixfbecker/advanced-json-rpc" />
@@ -90,7 +89,6 @@
       <path value="$PROJECT_DIR$/vendor/phpunit/php-invoker" />
       <path value="$PROJECT_DIR$/vendor/phpunit/php-text-template" />
       <path value="$PROJECT_DIR$/vendor/phpunit/php-timer" />
-      <path value="$PROJECT_DIR$/vendor/phpspec/prophecy" />
       <path value="$PROJECT_DIR$/vendor/phpstan/phpstan" />
       <path value="$PROJECT_DIR$/vendor/myclabs/deep-copy" />
       <path value="$PROJECT_DIR$/vendor/openlss/lib-array2xml" />
@@ -123,6 +121,7 @@
       <path value="$PROJECT_DIR$/vendor/psr/container" />
       <path value="$PROJECT_DIR$/vendor/google/auth" />
       <path value="$PROJECT_DIR$/vendor/firebase/php-jwt" />
+      <path value="$PROJECT_DIR$/vendor/smalot/pdfparser" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />
