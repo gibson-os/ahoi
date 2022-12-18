@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace GibsonOS\Module\Ahoi\Controller;
 
-use Exception;
 use GibsonOS\Core\Attribute\CheckPermission;
 use GibsonOS\Core\Attribute\GetMappedModel;
 use GibsonOS\Core\Attribute\GetModel;
@@ -28,14 +27,12 @@ use GibsonOS\Module\Ahoi\Service\LayoutService;
 use GibsonOS\Module\Ahoi\Service\ProjectService;
 use GibsonOS\Module\Ahoi\Store\ProjectItemStore;
 use GibsonOS\Module\Ahoi\Store\ProjectStore;
-use JsonException;
-use ReflectionException;
 
 class ProjectController extends AbstractController
 {
     /**
      * @throws SelectError
-     * @throws JsonException
+     * @throws \JsonException
      */
     #[CheckPermission(Permission::READ)]
     public function index(
@@ -57,7 +54,7 @@ class ProjectController extends AbstractController
 
     /**
      * @throws DeleteError
-     * @throws JsonException
+     * @throws \JsonException
      */
     #[CheckPermission(Permission::DELETE)]
     public function delete(ModelManager $modelManager, #[GetModel] Project $project): AjaxResponse
@@ -92,7 +89,7 @@ class ProjectController extends AbstractController
             if ($project->getId() === null) {
                 $projectService->create($project->getDir());
             }
-        } catch (SaveError|CreateError|GetError|SetError|ProjectException|Exception $e) {
+        } catch (SaveError|CreateError|GetError|SetError|ProjectException|\Exception $e) {
             $projectRepository->rollback();
 
             throw $e;
@@ -106,8 +103,8 @@ class ProjectController extends AbstractController
     /**
      * @throws FactoryError
      * @throws MapperException
-     * @throws JsonException
-     * @throws ReflectionException
+     * @throws \JsonException
+     * @throws \ReflectionException
      */
     #[CheckPermission(Permission::WRITE)]
     public function saveLayout(

@@ -9,7 +9,6 @@ use GibsonOS\Core\Attribute\Install\Database\Table;
 use GibsonOS\Core\Model\AbstractModel;
 use GibsonOS\Core\Model\User;
 use GibsonOS\Module\Transfer\Model\Session;
-use JsonSerializable;
 
 /**
  * @method Session|null getTransferSession()
@@ -18,7 +17,7 @@ use JsonSerializable;
  * @method Project      setUser(?User $user)
  */
 #[Table]
-class Project extends AbstractModel implements JsonSerializable
+class Project extends AbstractModel implements \JsonSerializable
 {
     #[Column(attributes: [Column::ATTRIBUTE_UNSIGNED], autoIncrement: true)]
     private ?int $id = null;

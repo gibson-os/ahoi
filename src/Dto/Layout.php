@@ -4,9 +4,8 @@ declare(strict_types=1);
 namespace GibsonOS\Module\Ahoi\Dto;
 
 use GibsonOS\Module\Ahoi\Dto\Layout\Navigation;
-use JsonSerializable;
 
-class Layout implements JsonSerializable
+class Layout implements \JsonSerializable
 {
     /**
      * @param Navigation[]          $navigations

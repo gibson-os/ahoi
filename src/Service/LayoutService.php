@@ -8,7 +8,6 @@ use GibsonOS\Core\Utility\JsonUtility;
 use GibsonOS\Module\Ahoi\Dto\Layout;
 use GibsonOS\Module\Ahoi\Dto\Layout\Navigation;
 use GibsonOS\Module\Ahoi\Model\Project;
-use JsonException;
 
 class LayoutService
 {
@@ -17,7 +16,7 @@ class LayoutService
     }
 
     /**
-     * @throws JsonException
+     * @throws \JsonException
      */
     public function load(Project $project): Layout
     {

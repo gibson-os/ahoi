@@ -15,7 +15,7 @@ class ProjectStore extends AbstractDatabaseStore
         return Project::class;
     }
 
-    protected function addWhere(string $where, array $parameters = []): void
+    protected function addWhere(string $where, array $parameters = []): ProjectStore
     {
         $where = '`user_id` IS NULL';
         $whereParameters = [];
@@ -25,7 +25,7 @@ class ProjectStore extends AbstractDatabaseStore
             $whereParameters[] = $this->userId;
         }
 
-        $this->addWhere($where, $whereParameters);
+        return $this->addWhere($where, $whereParameters);
     }
 
     public function getList(): iterable
