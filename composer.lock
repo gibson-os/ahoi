@@ -215,16 +215,16 @@
         },
         {
             "name": "gibson-os/transfer",
-            "version": "v1.0.1",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/gibson-os/transfer.git",
-                "reference": "6b16497282e052dfed6dc4948bbf6ffba79d4552"
+                "reference": "834306145fe52371f33abc75399d5557c024fbe9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/gibson-os/transfer/zipball/6b16497282e052dfed6dc4948bbf6ffba79d4552",
-                "reference": "6b16497282e052dfed6dc4948bbf6ffba79d4552",
+                "url": "https://api.github.com/repos/gibson-os/transfer/zipball/834306145fe52371f33abc75399d5557c024fbe9",
+                "reference": "834306145fe52371f33abc75399d5557c024fbe9",
                 "shasum": ""
             },
             "require": {
@@ -256,9 +256,9 @@
             "notification-url": "https://packagist.org/downloads/",
             "support": {
                 "issues": "https://github.com/gibson-os/transfer/issues",
-                "source": "https://github.com/gibson-os/transfer/tree/v1.0.1"
+                "source": "https://github.com/gibson-os/transfer/tree/v1.1.0"
             },
-            "time": "2022-12-18T20:14:22+00:00"
+            "time": "2023-01-03T13:38:03+00:00"
         },
         {
             "name": "google/auth",
