@@ -17,7 +17,9 @@
     },
     "autoload": {
         "psr-4": {
-            "GibsonOS\\Module\\Ahoi\\": "src/"
+            "GibsonOS\\Module\\Ahoi\\": "src/",
+            "GibsonOS\\Test\\Unit\\Ahoi\\": "tests/unit/",
+            "GibsonOS\\Test\\Functional\\Ahoi\\": "tests/functional/"
         }
     },
     "scripts": {

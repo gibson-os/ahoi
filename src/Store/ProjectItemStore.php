@@ -9,6 +9,7 @@ use GibsonOS\Core\Store\AbstractStore;
 use GibsonOS\Module\Ahoi\Dto\Layout;
 use GibsonOS\Module\Ahoi\Model\Project;
 use GibsonOS\Module\Ahoi\Service\LayoutService;
+use JsonException;
 
 class ProjectItemStore extends AbstractStore
 {
@@ -22,7 +23,7 @@ class ProjectItemStore extends AbstractStore
     }
 
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function getList(): iterable
     {

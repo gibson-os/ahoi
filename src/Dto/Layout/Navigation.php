@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace GibsonOS\Module\Ahoi\Dto\Layout;
 
-class Navigation implements \JsonSerializable
+use JsonSerializable;
+
+class Navigation implements JsonSerializable
 {
     public function __construct(
         private readonly string $itemId,

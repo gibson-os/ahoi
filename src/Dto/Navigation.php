@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace GibsonOS\Module\Ahoi\Dto;
 
-class Navigation implements \JsonSerializable
+use JsonSerializable;
+
+class Navigation implements JsonSerializable
 {
     /**
      * @param array<string, string> $name
