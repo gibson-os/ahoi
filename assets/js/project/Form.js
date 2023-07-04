@@ -116,13 +116,15 @@ Ext.define('GibsonOS.module.ahoi.project.Form', {
             text: 'Speichern',
             itemId: 'ahoiProjectFormSaveButton',
             requiredPermission: {
-                action:'save',
-                permission: GibsonOS.Permission.WRITE
+                action: '',
+                permission: GibsonOS.Permission.WRITE,
+                method: 'POST'
             },
             handler: function() {
                 me.getForm().submit({
                     xtype: 'gosFormActionAction',
-                    url: baseDir + 'ahoi/project/save',
+                    url: baseDir + 'ahoi/project',
+                    method: 'POST',
                     success: function(form, action) {
                         me.findField('id').setValue(Ext.decode(action.response.responseText).data.id);
 
@@ -140,7 +142,8 @@ Ext.define('GibsonOS.module.ahoi.project.Form', {
             disabled: true,
             requiredPermission: {
                 action:'publish',
-                permission: GibsonOS.Permission.MANAGE + GibsonOS.Permission.WRITE
+                permission: GibsonOS.Permission.MANAGE + GibsonOS.Permission.WRITE,
+                method: 'POST'
             },
             handler: function() {
                 // Beim klick sollte sich das publish fenster öffnen.

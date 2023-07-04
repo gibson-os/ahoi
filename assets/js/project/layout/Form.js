@@ -44,8 +44,9 @@ Ext.define('GibsonOS.module.ahoi.project.layout.Form', {
             text: 'Speichern',
             itemId: 'ahoiProjectLayoutFormSaveButton',
             requiredPermission: {
-                action:'saveLayout',
-                permission: GibsonOS.Permission.WRITE
+                action: 'layout',
+                permission: GibsonOS.Permission.WRITE,
+                method: 'POST'
             },
             handler: function() {
                 var navigations = [];
@@ -56,7 +57,8 @@ Ext.define('GibsonOS.module.ahoi.project.layout.Form', {
 
                 form.getForm().submit({
                     xtype: 'gosFormActionAction',
-                    url: baseDir + 'ahoi/project/saveLayout',
+                    url: baseDir + 'ahoi/project/layout',
+                    method: 'POST',
                     params: {
                         'navigations': Ext.encode(navigations)
                     },

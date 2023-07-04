@@ -8,6 +8,7 @@ use GibsonOS\Core\Attribute\CheckPermission;
 use GibsonOS\Core\Attribute\GetMappedModel;
 use GibsonOS\Core\Attribute\GetModel;
 use GibsonOS\Core\Controller\AbstractController;
+use GibsonOS\Core\Enum\Permission;
 use GibsonOS\Core\Exception\CreateError;
 use GibsonOS\Core\Exception\FactoryError;
 use GibsonOS\Core\Exception\GetError;
@@ -18,7 +19,6 @@ use GibsonOS\Core\Exception\Repository\SelectError;
 use GibsonOS\Core\Exception\SetError;
 use GibsonOS\Core\Manager\ModelManager;
 use GibsonOS\Core\Mapper\ObjectMapper;
-use GibsonOS\Core\Model\User\Permission;
 use GibsonOS\Core\Service\Response\AjaxResponse;
 use GibsonOS\Module\Ahoi\Dto\Layout\Navigation;
 use GibsonOS\Module\Ahoi\Exception\ProjectException;
@@ -37,8 +37,8 @@ class ProjectController extends AbstractController
      * @throws SelectError
      * @throws JsonException
      */
-    #[CheckPermission(Permission::READ)]
-    public function index(
+    #[CheckPermission([Permission::READ])]
+    public function get(
         ProjectRepository $projectRepository,
         ProjectStore $projectStore,
         ProjectItemStore $projectItemStore,
@@ -59,7 +59,7 @@ class ProjectController extends AbstractController
      * @throws DeleteError
      * @throws JsonException
      */
-    #[CheckPermission(Permission::DELETE)]
+    #[CheckPermission([Permission::DELETE])]
     public function delete(ModelManager $modelManager, #[GetModel] Project $project): AjaxResponse
     {
         // @todo dateien löschen
@@ -75,8 +75,8 @@ class ProjectController extends AbstractController
      * @throws SetError
      * @throws ProjectException
      */
-    #[CheckPermission(Permission::WRITE)]
-    public function save(
+    #[CheckPermission([Permission::WRITE])]
+    public function post(
         ProjectRepository $projectRepository,
         ProjectService $projectService,
         ModelManager $modelManager,
@@ -109,8 +109,8 @@ class ProjectController extends AbstractController
      * @throws JsonException
      * @throws ReflectionException
      */
-    #[CheckPermission(Permission::WRITE)]
-    public function saveLayout(
+    #[CheckPermission([Permission::WRITE])]
+    public function postLayout(
         LayoutService $layoutService,
         ObjectMapper $objectMapper,
         #[GetModel(['id' => 'projectId'])] Project $project,
@@ -137,20 +137,20 @@ class ProjectController extends AbstractController
         return $this->returnSuccess();
     }
 
-    #[CheckPermission(Permission::READ)]
-    public function pages(): AjaxResponse
+    #[CheckPermission([Permission::READ])]
+    public function getpages(): AjaxResponse
     {
         return $this->returnSuccess();
     }
 
-    #[CheckPermission(Permission::MANAGE + Permission::WRITE)]
-    public function upload(): AjaxResponse
+    #[CheckPermission([Permission::MANAGE, Permission::WRITE])]
+    public function postUpload(): AjaxResponse
     {
         return $this->returnSuccess();
     }
 
-    #[CheckPermission(Permission::MANAGE + Permission::WRITE)]
-    public function publish(): AjaxResponse
+    #[CheckPermission([Permission::MANAGE, Permission::WRITE])]
+    public function postPublish(): AjaxResponse
     {
         return $this->returnSuccess();
     }

@@ -33,6 +33,7 @@ Ext.define('GibsonOS.module.ahoi.project.publish.Window', {
 
                     GibsonOS.Ajax.request({
                         url: baseDir + 'ahoi/page/generate',
+                        method: 'POST',
                         params: {
                             projectId: window.gos.data.id,
                             localPath: progressBar.gos.data[index].localPath
@@ -47,6 +48,7 @@ Ext.define('GibsonOS.module.ahoi.project.publish.Window', {
 
                                 GibsonOS.Ajax.request({
                                     url: baseDir + 'ahoi/project/upload',
+                                    method: 'POST',
                                     params: {
                                         id: window.gos.data.id
                                     },
@@ -66,6 +68,7 @@ Ext.define('GibsonOS.module.ahoi.project.publish.Window', {
                 render: function(progressBar) {
                     GibsonOS.Ajax.request({
                         url: baseDir + 'ahoi/project/pages',
+                        method: 'GET',
                         params: {
                             id: window.gos.data.id
                         },

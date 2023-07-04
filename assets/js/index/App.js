@@ -112,8 +112,8 @@ Ext.define('GibsonOS.module.ahoi.index.App', {
                         }
                     });
 
-                    item.getForm().on('actioncomplete', function(form, action, options) {
-                        if (action.url !== baseDir + 'ahoi/page/save') {
+                    item.getForm().on('actioncomplete', function(form, action) {
+                        if (action.url !== baseDir + 'ahoi/page') {
                             return false;
                         }
 

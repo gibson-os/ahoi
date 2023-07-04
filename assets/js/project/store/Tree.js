@@ -5,6 +5,7 @@ Ext.define('GibsonOS.module.ahoi.project.store.Tree', {
     autoLoad: true,
     proxy: {
         type: 'gosDataProxyAjax',
-        url: baseDir + 'ahoi/project/index'
+        url: baseDir + 'ahoi/project/index',
+        method: 'GET'
     }
 });

@@ -27,13 +27,15 @@ Ext.define('GibsonOS.module.ahoi.partial.Form', {
         this.buttons = [{
             text: 'Speichern',
             requiredPermission: {
-                action:'save',
-                permission: GibsonOS.Permission.WRITE
+                action: '',
+                permission: GibsonOS.Permission.WRITE,
+                method: 'POST'
             },
             handler: function() {
                 form.getForm().submit({
                     xtype: 'gosFormActionAction',
-                    url: baseDir + 'ahoi/partial/save',
+                    url: baseDir + 'ahoi/partial',
+                    method: 'POST',
                     success: function(form, action) {
                         GibsonOS.MessageBox.show({
                             title: 'Gespeichert!',

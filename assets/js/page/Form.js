@@ -63,13 +63,15 @@ Ext.define('GibsonOS.module.ahoi.page.Form', {
             text: 'Speichern',
             itemId: 'ahoiPageFormSaveButton',
             requiredPermission: {
-                action:'save',
-                permission: GibsonOS.Permission.WRITE
+                action: '',
+                permission: GibsonOS.Permission.WRITE,
+                method: 'POST'
             },
             handler: function() {
                 form.getForm().submit({
                     xtype: 'gosFormActionAction',
-                    url: baseDir + 'ahoi/page/save',
+                    url: baseDir + 'ahoi/page',
+                    method: 'POST',
                     success: function(form, action) {
                         GibsonOS.MessageBox.show({
                             title: 'Gespeichert!',

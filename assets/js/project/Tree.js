@@ -22,8 +22,9 @@ Ext.define('GibsonOS.module.ahoi.project.Tree', {
                 iconCls: 'icon_system system_add',
                 text: 'Neues Projekt',
                 requiredPermission: {
-                    action: 'save',
-                    permission: GibsonOS.Permission.WRITE
+                    action: '',
+                    permission: GibsonOS.Permission.WRITE,
+                    method: 'POST'
                 },
                 handler: function () {
                     if (tree.getStore().getNodeById(0)) {
@@ -44,9 +45,10 @@ Ext.define('GibsonOS.module.ahoi.project.Tree', {
                 text: 'Neue Seite',
                 disabled: true,
                 requiredPermission: {
-                    task:'page',
-                    action:'save',
-                    permission: GibsonOS.Permission.WRITE
+                    task: 'page',
+                    action: '',
+                    permission: GibsonOS.Permission.WRITE,
+                    method: 'POST'
                 },
                 handler: function() {
                     var selectedNodes = tree.getSelectionModel().getSelection();
@@ -76,15 +78,15 @@ Ext.define('GibsonOS.module.ahoi.project.Tree', {
 
                 switch (record.get('type')) {
                     case 'project':
-                        url += 'project/delete';
+                        url += 'project';
                         msg = 'Projekt';
                         break;
                     case 'page':
-                        url += 'page/delete';
+                        url += 'page';
                         msg = 'Seite';
                         break;
                     case 'partial':
-                        url += 'partial/delete';
+                        url += 'partial';
                         msg = 'Partial';
                         break;
                 }
@@ -117,6 +119,7 @@ Ext.define('GibsonOS.module.ahoi.project.Tree', {
 
                             GibsonOS.Ajax.request({
                                 url: url,
+                                method: 'DELETE',
                                 params: {
                                     projectId: record.get('projectId'),
                                     localPath: record.get('localPath')
