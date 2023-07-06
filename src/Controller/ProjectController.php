@@ -138,7 +138,7 @@ class ProjectController extends AbstractController
     }
 
     #[CheckPermission([Permission::READ])]
-    public function getpages(): AjaxResponse
+    public function getPages(): AjaxResponse
     {
         return $this->returnSuccess();
     }
