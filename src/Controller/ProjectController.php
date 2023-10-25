@@ -80,7 +80,8 @@ class ProjectController extends AbstractController
         ProjectRepository $projectRepository,
         ProjectService $projectService,
         ModelManager $modelManager,
-        #[GetMappedModel(mapping: ['dir' => 'localPath', 'transferSessionId' => 'transferSession'])] Project $project,
+        #[GetMappedModel(mapping: ['dir' => 'localPath', 'transferSessionId' => 'transferSession'])]
+        Project $project,
         bool $onlyForThisUser = false,
     ): AjaxResponse {
         $projectRepository->startTransaction();
@@ -113,7 +114,8 @@ class ProjectController extends AbstractController
     public function postLayout(
         LayoutService $layoutService,
         ObjectMapper $objectMapper,
-        #[GetModel(['id' => 'projectId'])] Project $project,
+        #[GetModel(['id' => 'projectId'])]
+        Project $project,
         string $title,
         string $url,
         string $contentItemId,

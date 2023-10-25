@@ -2,7 +2,7 @@
     "name": "gibson-os/ahoi",
     "require": {
         "php": " ^8.2",
-        "gibson-os/transfer": "^3.0.0"
+        "gibson-os/transfer": "^4.0.0"
     },
     "require-dev": {
         "codeception/codeception": "^4.0",
