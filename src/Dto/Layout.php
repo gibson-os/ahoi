@@ -17,7 +17,7 @@ class Layout implements JsonSerializable
         private string $url,
         private string $contentItemId,
         private array $navigations,
-        private array $partials
+        private array $partials,
     ) {
     }
 

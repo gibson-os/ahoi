@@ -10,7 +10,7 @@ class Navigation implements JsonSerializable
     public function __construct(
         private readonly string $itemId,
         private readonly int $startDepth = 0,
-        private readonly ?int $depth = null
+        private readonly ?int $depth = null,
     ) {
     }
 

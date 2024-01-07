@@ -24,7 +24,7 @@ class LayoutService
         $layout = JsonUtility::decode(file_get_contents(
             $this->dirService->addEndSlash($project->getDir()) .
             'json' . DIRECTORY_SEPARATOR .
-            'layout.json'
+            'layout.json',
         ));
 
         $navigations = [];
@@ -33,7 +33,7 @@ class LayoutService
             $navigations[] = new Navigation(
                 $navigation['itemId'],
                 $navigation['startDepth'] ?? 0,
-                $navigation['depth'] ?? null
+                $navigation['depth'] ?? null,
             );
         }
 
@@ -42,7 +42,7 @@ class LayoutService
             $layout['url'],
             $layout['content']['itemId'],
             $navigations,
-            $layout['partials']
+            $layout['partials'],
         );
     }
 
@@ -53,7 +53,7 @@ class LayoutService
             'content' . DIRECTORY_SEPARATOR .
             'json' . DIRECTORY_SEPARATOR .
             'layout.json',
-            JsonUtility::encode($layout)
+            JsonUtility::encode($layout),
         );
     }
 }

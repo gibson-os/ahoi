@@ -34,9 +34,9 @@ class ProjectService
                 '..' . DIRECTORY_SEPARATOR .
                 '..' . DIRECTORY_SEPARATOR .
                 'files' . DIRECTORY_SEPARATOR .
-                'emptyProject'
+                'emptyProject',
             ),
-            $dir
+            $dir,
         );
     }
 }

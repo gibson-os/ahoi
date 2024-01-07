@@ -42,7 +42,7 @@ class ProjectItemStore extends AbstractStore
             'data' => $this->getPages(
                 $this->dirService->addEndSlash($this->project->getDir()) .
                 'json' . DIRECTORY_SEPARATOR .
-                'content' . DIRECTORY_SEPARATOR
+                'content' . DIRECTORY_SEPARATOR,
             ),
         ], [
             'id' => $id . '_partials',
