@@ -42,7 +42,7 @@ class ProjectController extends AbstractController
         ProjectRepository $projectRepository,
         ProjectStore $projectStore,
         ProjectItemStore $projectItemStore,
-        int $node = null,
+        ?int $node = null,
     ): AjaxResponse {
         if (!empty($node)) {
             $projectItemStore->setProject($projectRepository->getById($node, $this->sessionService->getUserId()));

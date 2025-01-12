@@ -20,7 +20,7 @@ class ProjectRepository extends AbstractRepository
      * @throws RecordException
      * @throws ReflectionException
      */
-    public function getById(int $id, int $userId = null): Project
+    public function getById(int $id, ?int $userId = null): Project
     {
         $userWhere = '';
         $whereParameters = [$id];

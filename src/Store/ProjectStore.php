@@ -6,6 +6,9 @@ namespace GibsonOS\Module\Ahoi\Store;
 use GibsonOS\Core\Store\AbstractDatabaseStore;
 use GibsonOS\Module\Ahoi\Model\Project;
 
+/**
+ * @extends AbstractDatabaseStore<Project>
+ */
 class ProjectStore extends AbstractDatabaseStore
 {
     private ?int $userId = null;
